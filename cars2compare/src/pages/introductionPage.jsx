@@ -1,6 +1,5 @@
-import Navbar from "../components/Navbar";
 const IntroductionPage = () => {
-  return <Navbar></Navbar>;
+  return <>Introduction Page</>;
 };
 
 export default IntroductionPage;
