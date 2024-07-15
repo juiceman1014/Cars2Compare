@@ -1,0 +1,1 @@
+*7/14/24: 7:00PM - 7:30PM. 30 minutes.* Created mockups and discussed distribution of work. 
