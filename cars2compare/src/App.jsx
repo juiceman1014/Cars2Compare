@@ -1,7 +1,7 @@
-import Navbar from "./components/Navbar.jsx";
-import IntroductionPage from "./pages/IntroductionPage";
-import SearchPage from "./pages/SearchPage.jsx";
-import SignUpPage from "./pages/SignUpPage.jsx";
+import Navbar from "./components/navbar.jsx";
+import IntroductionPage from "./pages/introductionPage";
+import SearchPage from "./pages/searchPage.jsx";
+import SignUpPage from "./pages/signUpPage.jsx";
 import CatalogPage from "./pages/CatalogPage.jsx";
 import { Route, Routes } from "react-router-dom";
 function App() {
