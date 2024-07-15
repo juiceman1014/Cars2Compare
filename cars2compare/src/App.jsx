@@ -1,9 +1,8 @@
+import IntroductionPage from "./pages/IntroductionPage";
 function App() {
   return (
     <>
-      <div>
-        <p className="text-2xl">hi</p>
-      </div>
+      <IntroductionPage />
     </>
   );
 }

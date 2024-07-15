@@ -1,7 +1,7 @@
 import React from "react";
 
-const signInPage = () => {
-  return <div>signInPage</div>;
+const SignInPage = () => {
+  return <div></div>;
 };
 
-export default signInPage;
+export default SignInPage;

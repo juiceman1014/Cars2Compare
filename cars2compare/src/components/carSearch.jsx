@@ -1,7 +1,7 @@
 import React from "react";
 
-const carSearch = () => {
-  return <div>carSearch</div>;
+const CarSearch = () => {
+  return <div>CarSearch</div>;
 };
 
-export default carSearch;
+export default CarSearch;

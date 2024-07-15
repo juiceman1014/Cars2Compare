@@ -1,7 +1,11 @@
 import React from "react";
-
-const introductionPage = () => {
-  return <div>introductionPage</div>;
+import Navbar from "../components/navbar";
+const IntroductionPage = () => {
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };
 
-export default introductionPage;
+export default IntroductionPage;
