@@ -2,7 +2,7 @@ import Navbar from "./components/navbar.jsx";
 import IntroductionPage from "./pages/introductionPage";
 import SearchPage from "./pages/searchPage.jsx";
 import SignUpPage from "./pages/signUpPage.jsx";
-import CatalogPage from "./pages/CatalogPage.jsx";
+import CarsSavedPage from "./pages/CarsSavedPage.jsx";
 import { Route, Routes } from "react-router-dom";
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<IntroductionPage />} />
         <Route path="/Search" element={<SearchPage />} />
-        <Route path="/Catalog" element={<CatalogPage />} />
+        <Route path="/CarsSaved" element={<CarsSavedPage />} />
         <Route path="/SignUp" element={<SignUpPage />} />
       </Routes>
     </>

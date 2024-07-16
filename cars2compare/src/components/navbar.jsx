@@ -8,7 +8,7 @@ const Navbar = () => {
         </Link>
         <ul className="flex gap-5 items-baseline">
           <CustomLink to="/Search"> Search</CustomLink>
-          <CustomLink to="/Catalog">Catalog</CustomLink>
+          <CustomLink to="/CarsSaved">Saved Cars</CustomLink>
 
           <CustomLink
             to="/SignUp"
