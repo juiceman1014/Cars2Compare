@@ -4,6 +4,8 @@ import SearchPage from "./pages/searchPage.jsx";
 import SignUpPage from "./pages/signUpPage.jsx";
 import CarsSavedPage from "./pages/CarsSavedPage.jsx";
 import { Route, Routes } from "react-router-dom";
+import Footer from "./components/footer.jsx";
+
 function App() {
   return (
     <>
@@ -14,6 +16,7 @@ function App() {
         <Route path="/CarsSaved" element={<CarsSavedPage />} />
         <Route path="/SignUp" element={<SignUpPage />} />
       </Routes>
+      <Footer></Footer>
     </>
   );
 }
