@@ -14,7 +14,7 @@ const Navbar = () => {
             to="/SignUp"
             className="border-2 border-black p-2 rounded-xl hover:bg-black hover:text-white"
           >
-            Sign Up
+            Sign In
           </CustomLink>
         </ul>
       </nav>
