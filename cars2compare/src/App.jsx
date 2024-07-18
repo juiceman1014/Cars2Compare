@@ -1,7 +1,7 @@
 import Navbar from "./components/navbar.jsx";
 import IntroductionPage from "./pages/introductionPage";
 import SearchPage from "./pages/searchPage.jsx";
-import SignUpPage from "./pages/signUpPage.jsx";
+import SignInPage from "./pages/signInPage.jsx";
 import CarsSavedPage from "./pages/CarsSavedPage.jsx";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/footer.jsx";
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<IntroductionPage />} />
         <Route path="/Search" element={<SearchPage />} />
         <Route path="/CarsSaved" element={<CarsSavedPage />} />
-        <Route path="/SignUp" element={<SignUpPage />} />
+        <Route path="/SignIn" element={<SignInPage />} />
       </Routes>
       <Footer></Footer>
     </>

@@ -11,7 +11,7 @@ const Navbar = () => {
           <CustomLink to="/CarsSaved">Saved Cars</CustomLink>
 
           <CustomLink
-            to="/SignUp"
+            to="/SignIn"
             className="border-2 border-black p-2 rounded-xl hover:bg-black hover:text-white"
           >
             Sign In
