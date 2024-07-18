@@ -24,7 +24,7 @@ const CarsSavedPage = () => {
           <car key = {car.id} className = "border-black m-[10px] border-[3px] flex flex-row p-[10px] justify-between items-center flex-wrap">
             <div>
               <button className = "text-[red]" onClick = {() => handleDelete(car.id)}>Delete</button>
-              <img className = "w-[300px] h-auto" src = {carImg}></img>
+              <img className = "w-[300px] h-auto" src = {carImg} alt = "car image"></img>
             </div>
             <p>Name:</p>
             <p>Price:</p>
