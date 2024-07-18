@@ -1,4 +1,6 @@
 import videoFile from "../assets/sample-video.webm";
+import { Link } from "react-router-dom";
+
 const IntroductionPage = () => {
   return (
     <>
@@ -11,9 +13,11 @@ const IntroductionPage = () => {
             </video>
           </div>
           <div className="flex flex-col items-center mt-4">
+            <Link to = '/Search'>
             <button className="text-black px-4 py-2 border-2 border-black rounded-full hover:bg-black hover:text-white">
               Start Comparing
             </button>
+            </Link>
           </div>
         </div>
       </div>
