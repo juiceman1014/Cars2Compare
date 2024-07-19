@@ -12,7 +12,7 @@ const Dropdown = ({ options }) => {
         Options
       </button>
       {isExpanded && (
-        <div className="absolute mt-1 w-32 bg-white border-[2px] border-black rounded-md shadow-lg z-50">
+        <div className="absolute mt-1 w-32 bg-white border-[2px] border-black rounded-md z-50">
           {options.map((option, index) => (
             <div
               key={index}
