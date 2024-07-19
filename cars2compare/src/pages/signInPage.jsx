@@ -23,7 +23,7 @@ const SignInPage = () => {
             <div className="flex">
               <p className="text-sm">
                 Don't have an account yet? Sign up{" "}
-                <Link className="text-sm text-sky-400">here</Link>
+                <Link to = "/Register" className="text-sm text-sky-400">here</Link>
               </p>
             </div>
           </div>
