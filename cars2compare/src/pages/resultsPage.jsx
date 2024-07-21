@@ -25,14 +25,6 @@ const ResultsPage = () => {
             <h1 className="text-xl text-center">Reviews</h1>
             <div className="p-[10px]">Username: Review</div>
             <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
           </div>
         </div>
         <div className="flex flex-col p-[10px] border-[3px] border-black w-3/6 h-auto">
@@ -53,14 +45,6 @@ const ResultsPage = () => {
           </div>
           <div className="flex flex-col mt-[10px]">
             <h1 className="text-xl text-center">Reviews</h1>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
             <div className="p-[10px]">Username: Review</div>
             <div className="p-[10px]">Username: Review</div>
           </div>
