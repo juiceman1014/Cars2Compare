@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Dropdown from "../components/dropDown";
+import { Link } from "react-router-dom";
+
 const SearchPage = ({ options, model, year }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
@@ -39,6 +41,9 @@ const SearchPage = ({ options, model, year }) => {
             </div>
           </div>
         </div>
+      </div>
+      <div className = "flex flex-row w-full justify-center my-[10px]">
+        <Link className = "text-center w-[100px] border-[2px] border-black"to="/Result">Compare</Link>
       </div>
     </>
   );
