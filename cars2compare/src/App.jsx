@@ -6,6 +6,7 @@ import CarsSavedPage from "./pages/CarsSavedPage.jsx";
 import RegisterPage from "./pages/registerPage.jsx";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/footer.jsx";
+import ResultsPage from "./pages/resultsPage.jsx";
 
 function App() {
   const carOptions = ["Toyota", "Honda", "Ford"]; //testing
@@ -30,6 +31,7 @@ function App() {
         <Route path="/CarsSaved" element={<CarsSavedPage />} />
         <Route path="/SignIn" element={<SignInPage />} />
         <Route path="/Register" element={<RegisterPage />} />
+        <Route path="/Result" element={<ResultsPage/>} />
       </Routes>
       <Footer></Footer>
     </>
