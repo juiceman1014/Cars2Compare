@@ -47,6 +47,17 @@ const CarsSavedPage = () => {
       transmission: "",
       weight: "",
     },
+    {
+      id: 5,
+      img: carImg,
+      name: "",
+      price: "",
+      mpg: "",
+      hp: "",
+      engine: "",
+      transmission: "",
+      weight: "",
+    }
   ]);
 
   const handleDelete = (id) => {
@@ -55,7 +66,7 @@ const CarsSavedPage = () => {
 
   return (
     <>
-      <div className="h-screen">
+      <div>
         <h1 className="text-center mt-[20px] text-xl">Saved Cars</h1>
         <carcontainer className="flex flex-col">
           {cars.map((car) => (
