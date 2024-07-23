@@ -1,4 +1,5 @@
 import React from "react";
+import Dropdown from "../components/dropDown";
 import carImg from "../assets/carImg1.png";
 
 const ResultsPage = () => {
