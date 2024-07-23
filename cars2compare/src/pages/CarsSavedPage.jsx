@@ -72,7 +72,7 @@ const CarsSavedPage = () => {
           {cars.map((car) => (
             <car
               key={car.id}
-              className="border-black m-[10px] border-[3px] flex flex-row p-[10px] justify-between items-center flex-wrap"
+              className="border-black m-[10px] border-[3px] flex flex-col lg:flex-row p-[10px] justify-between items-start lg:items-center flex-wrap"
             >
               <div>
                 <button
