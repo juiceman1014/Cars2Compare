@@ -33,7 +33,16 @@ function App() {
         <Route path="/SignIn" element={<SignInPage />} />
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/Result" element={<ResultsPage/>} />
-        <Route path="/Review" element={<ReviewPage/>} />
+        <Route
+          path="/Review"
+          element={
+            <ReviewPage
+              options={carOptions}
+              model={carOptions1}
+              year={carOptions2}
+            />
+          }
+        />
       </Routes>
       <Footer></Footer>
     </>
