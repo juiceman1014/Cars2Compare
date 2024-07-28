@@ -4,6 +4,7 @@ import cors from 'cors';
 import mysql from 'mysql2';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken'
 
 dotenv.config();
 
@@ -28,12 +29,24 @@ db.connect(err => {
     console.log('Connected as id ' + db.threadId);
 })
 
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if(token == null){
+        return res.sendStatus(401);
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, (err,user) =>{
+        if(err){
+            return res.sendStatus(403);
+        }
+        req.user = user;
+        next();
+    })
+}
+
 app.get('/', (req,res) => {
     res.send('Hello from the backend!');
-})
-
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
 })
 
 app.post('/register', async(req,res) => {
@@ -44,13 +57,27 @@ app.post('/register', async(req,res) => {
     }
 
     try{
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const query = 'INSERT INTO User (name, password) VALUES (?,?)';
-        db.query(query, [name, hashedPassword], (err,results) => {
+        const checkUserQuery = 'SELECT * FROM USER WHERE name = ?';
+        db.query(checkUserQuery, [name], async(err,results) => {
             if(err){
                 console.error(err);
                 return res.send('Server error');
             }
+
+            if(results.length > 0){
+                return res.status(409).send('Username already exists');
+            }
+        })
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const query = 'INSERT INTO User (name, password) VALUES (?,?)';
+        db.query(query, [name, hashedPassword], (err,results) => {
+
+            if(err){
+                console.error(err);
+                return res.send('Server error');
+            }
+
             res.send('User registered');
         });
     }catch(error){
@@ -59,4 +86,43 @@ app.post('/register', async(req,res) => {
     }
 });
 
+app.post('/login', (req, res) => {
+    const{ name, password } = req.body;
 
+    if(!name || !password){
+        return res.send('Please provide a name and password');
+    }
+
+    const query = 'Select * FROM User WHERE name = ?';
+    db.query(query, [name], async(err,results) => {
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+
+        if(results.length === 0){
+            return res.send('User not found');
+        }
+
+        const user = results[0];
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if(!isPasswordValid){
+            return res.send('Invalid password');
+        }
+
+        const token = jwt.sign({id:user.ID, name: user.name}, process.env.JWT_SECRET, {
+            expiresIn:'1h'
+        });
+
+        res.json({token});
+    });
+});
+
+app.get('/protected', authenticateToken, (req,res) => {
+    res.send('This is a protected rout');
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+})
