@@ -37,12 +37,12 @@ const ReviewPage = () => {
 
   useEffect(() => {
     const fetchModels = async() => {
-      if(!make){
+      if(!make || !year){
         return;
       }
 
       try{
-        const response = await axios.get(`http://localhost:3002/models/${make}`);
+        const response = await axios.get(`http://localhost:3002/models/${make}/${year}`);
         setModels(response.data);
       }catch (error) {
         console.error("Error fetching models", error);
@@ -50,7 +50,34 @@ const ReviewPage = () => {
     };
 
     fetchModels();
-  }, [make]);
+  }, [make, year]);
+
+  const handleReview = async() => {
+    if(!year || !make || !model || !content){
+      alert("Please fill out all fields");
+      return;
+    }
+
+    try{
+      const response = await axios.post("http://localhost:3002/review", {
+        year,
+        make,
+        model,
+        content,
+        userID: user.id
+      }, {
+        headers:{
+          Authorization: `Bearer ${user.token}`
+        }
+      });
+
+      const message = response.data;
+      alert(message);
+      }catch(error){
+        console.error("Error submitting review", error);
+        alert("Error submitting review");
+      }
+  };
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-center gap-3 mt-20">
@@ -88,7 +115,7 @@ const ReviewPage = () => {
                 <p className = "p-[5px]">Review:</p>
                 <textarea className = "border-[3px] border-black" value={content} onChange={(e) => setContent(e.target.value)}></textarea>
             </div>
-            <button className = "border-black border-[2px] w-3/6">Submit Review</button>
+            <button className = "border-black border-[2px] w-3/6" onClick={handleReview}>Submit Review</button>
           </div>
         </div>
       </div>
