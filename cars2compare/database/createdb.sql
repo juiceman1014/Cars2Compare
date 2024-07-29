@@ -1,1 +1,126 @@
-insert()
+CREATE DATABASE cardatabase;
+USE cardatabase;
+
+CREATE TABLE Members (
+	memberID VARCHAR(5) PRIMARY KEY,
+	email VARCHAR(50) NOT NULL UNIQUE,
+	phone VARCHAR(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE Car (
+	carID VARCHAR(5) PRIMARY KEY,
+	make VARCHAR(20) NOT NULL,
+	model VARCHAR(20) NOT NULL,
+	year INT NOT NULL,
+	bodyStyle VARCHAR(20) NOT NULL,
+	price VARCHAR(10),
+	mpg VARCHAR(10),
+	horsepower VARCHAR(10),
+	engineType VARCHAR(20),
+	rating DECIMAL(3,1)
+);
+
+CREATE TABLE SavedCars (
+	memberID VARCHAR(5),
+	carID VARCHAR(5),
+    PRIMARY KEY(memberID, carID),
+	FOREIGN KEY (memberID) REFERENCES Members(memberID) ON DELETE CASCADE,
+    FOREIGN KEY (carID) REFERENCES Car(carID) ON DELETE CASCADE
+);
+
+CREATE TABLE Reviews (
+	reviewID VARCHAR(5) PRIMARY KEY,
+	reviewContent TEXT NOT NULL,
+	memberID VARCHAR(5),
+	FOREIGN KEY (memberID) REFERENCES Members(memberID) ON DELETE CASCADE
+); 
+
+CREATE TABLE ReviewLikes (
+	reviewID VARCHAR(5),
+    memberID VARCHAR(5),
+    PRIMARY KEY(reviewID, memberID),
+    FOREIGN KEY (reviewID) REFERENCES Reviews(reviewID) ON DELETE CASCADE,
+	FOREIGN KEY (memberID) REFERENCES Members(memberID) ON DELETE CASCADE
+);
+
+CREATE TABLE ReviewDislikes (
+	reviewID VARCHAR(5),
+    memberID VARCHAR(5),
+    PRIMARY KEY(reviewID, memberID),
+    FOREIGN KEY (reviewID) REFERENCES Reviews(reviewID) ON DELETE CASCADE,
+	FOREIGN KEY (memberID) REFERENCES Members(memberID) ON DELETE CASCADE
+);
+	
+
+CREATE TABLE Comments (
+	commentID VARCHAR(5) PRIMARY KEY,
+	datePosted DATE NOT NULL,
+	textualContent TEXT NOT NULL,
+	author VARCHAR(5),
+	reviewID VARCHAR(5),
+	FOREIGN KEY (author) REFERENCES Members(memberID) ON DELETE CASCADE,
+	FOREIGN KEY (reviewID) REFERENCES Reviews(reviewID) ON DELETE CASCADE
+);
+
+CREATE TABLE CommentLikes (
+	commentID VARCHAR(5),
+	memberID VARCHAR(5),
+	PRIMARY KEY(commentID, memberID),
+	FOREIGN KEY (commentID) REFERENCES Comments(commentID) ON DELETE CASCADE,
+	FOREIGN KEY (memberID) REFERENCES Members(memberID) ON DELETE CASCADE
+);
+
+CREATE TABLE CommentDislikes (
+	commentID VARCHAR(5),
+	memberID VARCHAR(5),
+	PRIMARY KEY(commentID, memberID),
+	FOREIGN KEY (commentID) REFERENCES Comments(commentID) ON DELETE CASCADE,
+	FOREIGN KEY (memberID) REFERENCES Members(memberID) ON DELETE CASCADE
+);
+
+CREATE TABLE Photo (
+	photoID VARCHAR(5) PRIMARY KEY,
+	carID VARCHAR(5),
+	FOREIGN KEY (carID) REFERENCES Car(carID) ON DELETE CASCADE
+);
+
+
+CREATE TABLE saved_by (
+	memberID VARCHAR(5),
+    carID VARCHAR(5),
+	PRIMARY KEY(memberID, carID),
+	FOREIGN KEY (memberID) REFERENCES Members(memberID) ON DELETE CASCADE,
+    FOREIGN KEY (carID) REFERENCES Car(carID) ON DELETE CASCADE
+);
+
+CREATE TABLE included_in (
+    carID VARCHAR(5),
+    memberID VARCHAR(5),
+	PRIMARY KEY(carID, memberID),
+    FOREIGN KEY (carID) REFERENCES Car(carID) ON DELETE CASCADE,
+    FOREIGN KEY (memberID) REFERENCES Members(memberID) ON DELETE CASCADE
+);
+
+CREATE TABLE car_has_photo (
+    carID VARCHAR(5),
+    photoID VARCHAR(5),
+	PRIMARY KEY(carID, photoID),
+    FOREIGN KEY (carID) REFERENCES Car(carID) ON DELETE CASCADE,
+    FOREIGN KEY (photoID) REFERENCES Photo(photoID) ON DELETE CASCADE
+);
+
+CREATE TABLE car_has_review (
+    carID VARCHAR(5),
+    reviewID VARCHAR(5),
+	PRIMARY KEY(carID, reviewID),
+    FOREIGN KEY (carID) REFERENCES Car(carID) ON DELETE CASCADE,
+    FOREIGN KEY (reviewID) REFERENCES Reviews(reviewID) ON DELETE CASCADE
+);
+
+CREATE TABLE member_leaves_review (
+	memberID VARCHAR(5),
+    reviewID VARCHAR(5),
+	PRIMARY KEY(memberID, reviewID),
+	FOREIGN KEY (memberID) REFERENCES Members(memberID) ON DELETE CASCADE,
+    FOREIGN KEY (reviewID) REFERENCES Reviews(reviewID) ON DELETE CASCADE
+); 
