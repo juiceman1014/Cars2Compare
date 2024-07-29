@@ -12,7 +12,7 @@ const SignInPage = () => {
     if (result.success) {
       alert("Login successful");
     } else {
-      alert("Login failed" + result.message);
+      alert(result.message);
     }
   };
 
