@@ -31,7 +31,7 @@ export const UserProvider = ({children}) => {
             console.log(token);
             localStorage.setItem('token', token);
             const decodedUser = jwtDecode(token);
-            setUser({ username: decodedUser.name, token });
+            setUser({ id: decodedUser.id, username: decodedUser.name, token });
             return { success: true, message: 'Login successful' };
         }catch(error){
             console.error(error);
