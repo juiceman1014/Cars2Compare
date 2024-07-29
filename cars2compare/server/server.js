@@ -111,7 +111,7 @@ app.post('/login', (req, res) => {
             return res.send('Invalid password');
         }
 
-        const token = jwt.sign({id:user.ID, name: user.name}, process.env.JWT_SECRET, {
+        const token = jwt.sign({id:user.user_ID, name: user.name}, process.env.JWT_SECRET, {
             expiresIn:'1h'
         });
 
@@ -141,15 +141,46 @@ app.get('/makes', (req,res) => {
     });
 });
 
-app.get('/models/:make', (req, res) => {
-    const { make } = req.params;
-    const query = 'SELECT DISTINCT model FROM Car where make = ? ORDER BY model';
-    db.query(query, [make], (err, results) => {
+app.get('/models/:make/:year', (req, res) => {
+    const { make, year } = req.params;
+    const query = 'SELECT DISTINCT model FROM Car where make = ? AND year = ? ORDER BY model';
+    db.query(query, [make, year], (err, results) => {
         if(err){
             console.error(err);
             return res.send('Server error');
         }
         res.json(results.map(row => row.model));
+    });
+});
+
+app.post('/review', authenticateToken, (req, res) => {
+    const{ year, make, model, content, userID} = req.body;
+
+    if(!year || !make || !model || !content){
+        return res.send('Please fill out all fields');
+    }
+
+    const query = 'SELECT car_ID from Car WHERE year = ? AND make = ? AND model = ?';
+    db.query(query, [year,make,model], (err,results) => {
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+
+        if(results.length === 0){
+            return res.send('Car not found');
+        }
+
+        const carID = results[0].car_ID;
+        const insertReviewQuery = 'INSERT INTO Review (car_ID, user_ID, content) VALUES (?,?,?)';
+        db.query(insertReviewQuery, [carID, userID, content], (err,results) =>{
+            if(err){
+                console.error(err);
+                return res.send('Server error');
+            }
+
+            res.send('Review successfully submitted');
+        });
     });
 });
 
