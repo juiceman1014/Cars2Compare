@@ -119,6 +119,40 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.get('/years', (req,res) => {
+    const query = 'SELECT DISTINCT year from Car ORDER BY year DESC';
+    db.query(query, (err, results) => {
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.json(results.map(row => row.year));
+    });
+});
+
+app.get('/makes', (req,res) => {
+    const query = 'SELECT DISTINCT make from Car ORDER BY make ASC';
+    db.query(query, (err, results) => {
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.json(results.map(row => row.make));
+    });
+});
+
+app.get('/models/:make', (req, res) => {
+    const { make } = req.params;
+    const query = 'SELECT DISTINCT model FROM Car where make = ? ORDER BY model';
+    db.query(query, [make], (err, results) => {
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.json(results.map(row => row.model));
+    });
+});
+
 app.get('/protected', authenticateToken, (req,res) => {
     res.send('This is a protected rout');
 });
