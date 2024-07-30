@@ -200,7 +200,7 @@ app.get('/carData', (req, res) => {
 
 
 app.get('/protected', authenticateToken, (req,res) => {
-    res.send('This is a protected rout');
+    res.send('This is a protected route');
 });
 
 app.listen(port, () => {
