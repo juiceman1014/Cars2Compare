@@ -184,6 +184,21 @@ app.post('/review', authenticateToken, (req, res) => {
     });
 });
 
+app.get('/carData', (req, res) => {
+    const { make, model, year } = req.query;
+    const query = 'SELECT price, MPG, HP, engine, transmission, weight FROM Car WHERE make = ? AND model = ? AND year = ?';
+    
+    db.query(query, [make, model, year], (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.send('Server error');
+      }
+      res.json(results[0]);
+    });
+  });
+  
+
+
 app.get('/protected', authenticateToken, (req,res) => {
     res.send('This is a protected rout');
 });
