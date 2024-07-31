@@ -1,67 +1,44 @@
 import carImg from "../assets/carImg1.png";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { UserContext } from "../context/UserContext.jsx";
 
 const CarsSavedPage = () => {
-  const [cars, setCars] = useState([
-    {
-      id: 1,
-      img: carImg,
-      name: "",
-      price: "",
-      mpg: "",
-      hp: "",
-      engine: "",
-      transmission: "",
-      weight: "",
-    },
-    {
-      id: 2,
-      img: carImg,
-      name: "",
-      price: "",
-      mpg: "",
-      hp: "",
-      engine: "",
-      transmission: "",
-      weight: "",
-    },
-    {
-      id: 3,
-      img: carImg,
-      name: "",
-      price: "",
-      mpg: "",
-      hp: "",
-      engine: "",
-      transmission: "",
-      weight: "",
-    },
-    {
-      id: 4,
-      img: carImg,
-      name: "",
-      price: "",
-      mpg: "",
-      hp: "",
-      engine: "",
-      transmission: "",
-      weight: "",
-    },
-    {
-      id: 5,
-      img: carImg,
-      name: "",
-      price: "",
-      mpg: "",
-      hp: "",
-      engine: "",
-      transmission: "",
-      weight: "",
-    }
-  ]);
+  
+  const { user } = useContext(UserContext);
+  const [cars, setCars] = useState([]);
+  
+  useEffect(() => {
+    const fetchSavedCars = async () => {
+      if(user && user.token) {
+        try{
+          const response = await axios.get('http://localhost:3002/savedCars', {
+            headers: {
+              Authorization: `Bearer ${user.token}`
+            }
+          });
+          setCars(response.data);
+        } catch(error){
+          console.error('Error fetching saved cars', error);
+        }
+      }
+    };
+    fetchSavedCars();
+  }, [user]);
 
-  const handleDelete = (id) => {
-    setCars(cars.filter((car) => car.id !== id));
+  const handleDelete = async (carID) => {
+    if(user && user.token){
+      try{
+        await axios.delete(`http://localhost:3002/savedCars/${carID}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        });
+        setCars(cars.filter((car) => car.car_ID !== carID));
+      }catch(error){
+        console.error('Error deleting car', error);
+      }
+    }
   };
 
   return (
@@ -71,29 +48,31 @@ const CarsSavedPage = () => {
         <carcontainer className="flex flex-col">
           {cars.map((car) => (
             <car
-              key={car.id}
+              key={car.car_ID}
               className="border-black m-[10px] border-[3px] flex flex-col lg:flex-row p-[10px] justify-between items-start lg:items-center flex-wrap"
             >
               <div>
                 <button
                   className="text-[red]"
-                  onClick={() => handleDelete(car.id)}
+                  onClick={() => handleDelete(car.car_ID)}
                 >
                   Delete
                 </button>
                 <img
                   className="w-[300px] h-auto"
-                  src={car.img}
+                  src={car.image_path}
                   alt="car image"
                 ></img>
               </div>
-              <p>Name: {car.name}</p>
+              <p>Name: {car.year} {car.make} {car.model}</p>
+              <p>Edmund Rating: {car.rating}</p>
               <p>Price: {car.price}</p>
-              <p>MPG: {car.mpg}</p>
-              <p>HP: {car.hp}</p>
+              <p>Body type: {car.body_style}</p>
+              <p>MPG: {car.MPG}</p>
+              <p>HP: {car.HP}</p>
               <p>Engine: {car.engine}</p>
               <p>Transmission: {car.transmission}</p>
-              <p>Weight: {car.weight}</p>
+              <p>Weight(lbs.): {car.weight}</p>
             </car>
           ))}
         </carcontainer>
