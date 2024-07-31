@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { UserContext } from "../context/UserContext.jsx";
 import carImg from "../assets/carImg1.png";
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ResultsPage = () => {
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const location = useLocation();
   const paramaters = new URLSearchParams(location.search);
 
@@ -41,9 +44,29 @@ const ResultsPage = () => {
         console.error("Error fetching cardata", error);
       }
     };
-
     carData();
   }, []);
+
+  const handleSavedCar = async (carID) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/savedCar",
+        {
+          carID: carID,
+          userID: user.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      alert("Car saved successfully");
+    } catch (error) {
+      alert("Error saving car");
+      console.error(error.response ? error.response.data : error.message);
+    }
+  };
 
   return (
     <>
@@ -62,14 +85,22 @@ const ResultsPage = () => {
           <p className="p-[10px]">Transmission: {carInfo.transmission} </p>
           <p className="p-[10px]">Weight: {carInfo.weight} </p>
           <div className="flex justify-center p-[10px]">
-            <button className="border-black border-[2px] w-[70px] ">
+            <button
+              className="border-black border-[2px] w-[70px]"
+              onClick={() => handleSavedCar(carInfo.car_ID)}
+            >
               Add To Saved
             </button>
           </div>
           <div className="flex flex-col mt-[10px]">
-            <h1 className="text-xl text-center">Reviews</h1>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
+            <button
+              className="text-xl text-center"
+              onClick={() => {
+                navigate(`/ReviewForCar?carID=${carInfo.car_ID}`);
+              }}
+            >
+              Reviews
+            </button>
           </div>
         </div>
         <div className="flex flex-col p-[10px] border-[3px] border-black w-3/6 h-auto">
@@ -86,14 +117,22 @@ const ResultsPage = () => {
           <p className="p-[10px]">Transmission: {carInfoTwo.transmission} </p>
           <p className="p-[10px]">Weight: {carInfoTwo.weight} </p>
           <div className="flex justify-center p-[10px]">
-            <button className="border-black border-[2px] w-[70px] ">
+            <button
+              className="border-black border-[2px] w-[70px]"
+              onClick={() => handleSavedCar(carInfoTwo.car_ID)}
+            >
               Add To Saved
             </button>
           </div>
           <div className="flex flex-col mt-[10px]">
-            <h1 className="text-xl text-center">Reviews</h1>
-            <div className="p-[10px]">Username: Review</div>
-            <div className="p-[10px]">Username: Review</div>
+            <button
+              className="text-xl text-center"
+              onClick={() => {
+                navigate(`/ReviewForCar?carID=${carInfoTwo.car_ID}`);
+              }}
+            >
+              Reviews
+            </button>
           </div>
         </div>
       </div>

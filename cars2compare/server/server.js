@@ -186,7 +186,7 @@ app.post('/review', authenticateToken, (req, res) => {
 
 app.get('/carData', (req, res) => {
     const { make, model, year } = req.query;
-    const query = 'SELECT price, MPG, HP, engine, transmission, weight FROM Car WHERE make = ? AND model = ? AND year = ?';
+    const query = 'SELECT car_ID, price, MPG, HP, engine, transmission, weight FROM Car WHERE make = ? AND model = ? AND year = ?';
     
     db.query(query, [make, model, year], (err, results) => {
       if (err) {
@@ -202,7 +202,35 @@ app.get('/savedCars', authenticateToken, (req,res) => {
     const query = `SELECT C.*, P.image_path 
     FROM Car C, Saved_Car SC, Photo P, Car_Has_Photo CHP 
     WHERE SC.car_ID = CHP.car_ID AND CHP.photo_ID = P.photo_ID AND SC.car_ID = C.car_ID AND SC.user_ID = ?`;
+});
 
+app.post('/savedCar', authenticateToken, (req, res) => {
+    const { carID, userID } = req.body;
+
+    if (!carID || !userID) {
+        console.error('Missing carID or userID:', req.body);
+        return res.status(400).send('Error: Missing carID or userID');
+    }
+
+    const insertSavedCar = 'INSERT INTO SavedCars (carID, userID) VALUES (?, ?)';
+    db.query(insertSavedCar, [carID, userID], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).send('Server error');
+        }
+
+        res.send('Successfully saved');
+    });
+});
+
+app.get('/getReviews',(req,res) =>{
+    const { carID } = req.params;
+    if(!carID){
+        console.error("No carID", req.body);
+        return res.status(400).send('Error: Missing carID');
+    }
+
+    const query = "SELECT";
     db.query(query, [userID], (err, results) => {
         if(err){
             console.error(err);

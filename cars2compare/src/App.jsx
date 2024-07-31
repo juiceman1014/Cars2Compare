@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router-dom";
 import Footer from "./components/footer.jsx";
 import ResultsPage from "./pages/resultsPage.jsx";
 import ReviewPage from "./pages/reviewPage.jsx";
+import ReviewsForCar from "./pages/ReviewsForCar.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/Result" element={<ResultsPage />} />
         <Route path="/Review" element={<ReviewPage />} />
+        <Route path="/ReviewForCar" element={<ReviewsForCar />} />
       </Routes>
       <Footer></Footer>
     </>
