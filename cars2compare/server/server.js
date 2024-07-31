@@ -197,7 +197,35 @@ app.get('/carData', (req, res) => {
     });
   });
   
+app.get('/savedCars', authenticateToken, (req,res) => {
+    const userID = req.user.id;
+    const query = `SELECT C.*, P.image_path 
+    FROM Car C, Saved_Car SC, Photo P, Car_Has_Photo CHP 
+    WHERE SC.car_ID = CHP.car_ID AND CHP.photo_ID = P.photo_ID AND SC.car_ID = C.car_ID AND SC.user_ID = ?`;
 
+    db.query(query, [userID], (err, results) => {
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.json(results);
+    });
+});
+
+app.delete('/savedCars/:carID', authenticateToken, (req,res) => {
+    const userID = req.user.id;
+    const carID = req.params.carID;
+
+    const query = `DELETE FROM Saved_Car WHERE car_ID = ? and user_ID = ?`;
+
+    db.query(query, [carID, userID], (err, results) => {
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.send('Car succesfully deleted!');
+    });
+});
 
 app.get('/protected', authenticateToken, (req,res) => {
     res.send('This is a protected route');
