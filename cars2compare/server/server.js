@@ -202,6 +202,14 @@ app.get('/savedCars', authenticateToken, (req,res) => {
     const query = `SELECT C.*, P.image_path 
     FROM Car C, Saved_Car SC, Photo P, Car_Has_Photo CHP 
     WHERE SC.car_ID = CHP.car_ID AND CHP.photo_ID = P.photo_ID AND SC.car_ID = C.car_ID AND SC.user_ID = ?`;
+
+    db.query(query, [userID], (err, results) => {
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.json(results);
+    });
 });
 
 app.post('/savedCar', authenticateToken, (req, res) => {
