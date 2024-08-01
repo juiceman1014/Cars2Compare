@@ -231,15 +231,20 @@ app.post('/savedCar', authenticateToken, (req, res) => {
     });
 });
 
-app.get('/getReviews',(req,res) =>{
+app.get('/getReviews/:carID',(req,res) =>{
     const { carID } = req.params;
     if(!carID){
         console.error("No carID", req.body);
         return res.status(400).send('Error: Missing carID');
     }
 
-    const query = "SELECT";
-    db.query(query, [userID], (err, results) => {
+    const query = `
+        SELECT Review.content, Review.review_ID, User.name 
+        FROM Review, User 
+        WHERE Review.user_ID = User.user_ID 
+        AND Review.car_ID = ?
+    `;
+    db.query(query, [carID], (err, results) => {
         if(err){
             console.error(err);
             return res.send('Server error');
@@ -247,6 +252,40 @@ app.get('/getReviews',(req,res) =>{
         res.json(results);
     });
 });
+
+app.get('/getComments', (req, res) => {
+    const query = `
+        SELECT Comments.textualContent, Comments.reviewID, User.name 
+        FROM Comments, User
+        WHERE Comments.user_ID = User.user_ID
+    `;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.json(results);
+    });
+});
+
+
+
+app.post('/submitComment', authenticateToken, (req, res) => {
+    const { reviewID, userID, content } = req.body;
+    if (!reviewID || !userID || !content) {
+        console.error('Missing parameters');
+        return res.status(400).send('Missing reviewID, userID, or content');
+    }
+    const insertComment = 'INSERT INTO Comments (reviewID, user_ID, textualContent) VALUES (?, ?, ?)';
+    db.query(insertComment, [reviewID, userID, content], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).send('Server error');
+        }
+        res.send('Comment successfully saved');
+    });
+});
+
 
 app.delete('/savedCars/:carID', authenticateToken, (req,res) => {
     const userID = req.user.id;
