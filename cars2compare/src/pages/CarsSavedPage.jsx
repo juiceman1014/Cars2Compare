@@ -16,6 +16,7 @@ const CarsSavedPage = () => {
               Authorization: `Bearer ${user.token}`,
             },
           });
+          console.log(response.data);
           setCars(response.data);
         } catch (error) {
           console.error("Error fetching saved cars", error);

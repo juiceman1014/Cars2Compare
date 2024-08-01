@@ -208,6 +208,7 @@ app.get('/savedCars', authenticateToken, (req,res) => {
             console.error(err);
             return res.send('Server error');
         }
+        console.log(results);
         res.json(results);
     });
 });
@@ -220,7 +221,7 @@ app.post('/savedCar', authenticateToken, (req, res) => {
         return res.status(400).send('Error: Missing carID or userID');
     }
 
-    const insertSavedCar = 'INSERT INTO SavedCars (carID, userID) VALUES (?, ?)';
+    const insertSavedCar = 'INSERT INTO Saved_Car (car_ID, user_ID) VALUES (?, ?)';
     db.query(insertSavedCar, [carID, userID], (err, results) => {
         if (err) {
             console.error('Database error:', err);
@@ -255,7 +256,7 @@ app.get('/getReviews/:carID',(req,res) =>{
 
 app.get('/getComments', (req, res) => {
     const query = `
-        SELECT Comments.textualContent, Comments.reviewID, User.name 
+        SELECT Comments.textualContent, Comments.review_ID, User.name 
         FROM Comments, User
         WHERE Comments.user_ID = User.user_ID
     `;
@@ -276,7 +277,7 @@ app.post('/submitComment', authenticateToken, (req, res) => {
         console.error('Missing parameters');
         return res.status(400).send('Missing reviewID, userID, or content');
     }
-    const insertComment = 'INSERT INTO Comments (reviewID, user_ID, textualContent) VALUES (?, ?, ?)';
+    const insertComment = 'INSERT INTO Comments (review_ID, user_ID, textualContent) VALUES (?, ?, ?)';
     db.query(insertComment, [reviewID, userID, content], (err, results) => {
         if (err) {
             console.error('Database error:', err);

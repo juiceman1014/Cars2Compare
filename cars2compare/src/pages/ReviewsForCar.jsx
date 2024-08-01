@@ -55,7 +55,6 @@ const ReviewsForCar = () => {
           `http://localhost:3002/getReviews/${carID}`
         );
         setReviews(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching reviews", error);
       }
@@ -68,7 +67,6 @@ const ReviewsForCar = () => {
       try {
         const response = await axios.get(`http://localhost:3002/getComments`);
         setComments(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching comments", error);
       }
@@ -122,7 +120,7 @@ const ReviewsForCar = () => {
             <div className="mt-4">
               <h2 className="text-lg">Comments:</h2>
               {comments
-                .filter((comment) => comment.reviewID === review.review_ID)
+                .filter((comment) => comment.review_ID === review.review_ID)
                 .map((comment, commentIndex) => (
                   <div
                     key={commentIndex}
