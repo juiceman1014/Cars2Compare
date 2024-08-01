@@ -10,7 +10,8 @@ const SignInPage = () => {
   const handleLogin = async () => {
     const result = await login(username, password);
     if (result.success) {
-      alert("Login successful");
+      alert("Login successful! Press OK to redirect to home page");
+      window.location.href = "/"
     } else {
       alert(result.message);
     }
