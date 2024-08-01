@@ -271,7 +271,7 @@ INSERT INTO Car( carID, make, model, carYear, bodyStyle, price, mpg, horsepower,
 	('C82', 'Subaru', 'Crosstrek', '2024', 'SUV', '30000', '28 / 33', '152 hp', '2.0L I4', '8', 'Continuously variable transmission (CVT)', '3200'),
 	('C83', 'Volkswagen', 'Atlas', '2024', 'SUV', '36000', '21 / 25', '276 hp', '3.6L V6', '7.7', '8-speed automatic', '4500'),
 	('C84', 'Volkswagen', 'Golf', '2024', 'Hatchback', '31000', '29 / 39', '168 hp', '2.0L Turbo I4', '8', '6-speed manual, 7-speed dual-clutch automatic', '3000'),
-	('C85', 'Volkswagen', 'Jetta', '2024', 'Sedan', '28000', '30 / 40', '158 hp', '1.5L Turbo I4', '7.8', '8-speed auttransmissionomatic', '3100'),
+	('C85', 'Volkswagen', 'Jetta', '2024', 'Sedan', '28000', '30 / 40', '158 hp', '1.5L Turbo I4', '7.8', '8-speed automatic', '3100'),
 	('C86', 'Volkswagen', 'ID.4', '2024', 'SUV (Electric)', '41600', '100 / 250', '201 hp', 'Electric', '7.7', 'Single-speed automatic', '4600');
 
 SELECT * 
