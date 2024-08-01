@@ -223,15 +223,20 @@ app.post('/savedCar', authenticateToken, (req, res) => {
     });
 });
 
-app.get('/getReviews',(req,res) =>{
+app.get('/getReviews/:carID',(req,res) =>{
     const { carID } = req.params;
     if(!carID){
         console.error("No carID", req.body);
         return res.status(400).send('Error: Missing carID');
     }
 
-    const query = "SELECT";
-    db.query(query, [userID], (err, results) => {
+    const query = `
+        SELECT Review.content, User.name 
+        FROM Review, User 
+        WHERE Review.user_ID = User.user_ID 
+        AND Review.car_ID = ?
+    `;
+    db.query(query, [carID], (err, results) => {
         if(err){
             console.error(err);
             return res.send('Server error');

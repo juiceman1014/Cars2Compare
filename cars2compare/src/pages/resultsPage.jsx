@@ -96,7 +96,9 @@ const ResultsPage = () => {
             <button
               className="text-xl text-center"
               onClick={() => {
-                navigate(`/ReviewForCar?carID=${carInfo.car_ID}`);
+                navigate(
+                  `/ReviewForCar?carID=${carInfo.car_ID}&make=${make}&model=${model}`
+                );
               }}
             >
               Reviews
@@ -128,7 +130,9 @@ const ResultsPage = () => {
             <button
               className="text-xl text-center"
               onClick={() => {
-                navigate(`/ReviewForCar?carID=${carInfoTwo.car_ID}`);
+                navigate(
+                  `/ReviewForCar?carID=${carInfoTwo.car_ID}&make=${makeTwo}&model=${modelTwo}`
+                );
               }}
             >
               Reviews
