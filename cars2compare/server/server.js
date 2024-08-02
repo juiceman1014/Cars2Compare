@@ -49,41 +49,41 @@ app.get('/', (req,res) => {
     res.send('Hello from the backend!');
 })
 
-app.post('/register', async(req,res) => {
+app.post('/register', (req,res) => {
     const{ name, password } = req.body;
 
     if(!name || !password){
         return res.send('Please provide a name and password');
     }
 
-    try{
-        const checkUserQuery = 'SELECT * FROM USER WHERE name = ?';
-        db.query(checkUserQuery, [name], async(err,results) => {
+    const checkUserQuery = 'SELECT * FROM USER WHERE name = ?';
+    db.query(checkUserQuery, [name], (err,results) => {
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+         }
+
+        if(results.length > 0){
+            return res.send('Username already exists');
+        }
+
+        bcrypt.hash(password, 10, (err,hashedPassword) => {
             if(err){
                 console.error(err);
-                return res.send('Server error');
+                return res.send('Error hashing password');
             }
 
-            if(results.length > 0){
-                return res.status(409).send('Username already exists');
-            }
-        })
+            const insertUserQuery = 'INSERT INTO User (name, password) VALUES (?, ?)';
+            db.query(insertUserQuery, [name,hashedPassword], (err, results) => {
+                if(err){
+                    console.error(err);
+                    return res.send('Server error');
+                }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const query = 'INSERT INTO User (name, password) VALUES (?,?)';
-        db.query(query, [name, hashedPassword], (err,results) => {
-
-            if(err){
-                console.error(err);
-                return res.send('Server error');
-            }
-
-            res.send('User registered');
+                res.send('User registered');
+            });
         });
-    }catch(error){
-        console.error(error);
-        res.send('Server error');
-    }
+    });    
 });
 
 app.post('/login', (req, res) => {
@@ -94,7 +94,7 @@ app.post('/login', (req, res) => {
     }
 
     const query = 'Select * FROM User WHERE name = ?';
-    db.query(query, [name], async(err,results) => {
+    db.query(query, [name], (err,results) => {
         if(err){
             console.error(err);
             return res.send('Server error');
@@ -105,17 +105,37 @@ app.post('/login', (req, res) => {
         }
 
         const user = results[0];
-        const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        if(!isPasswordValid){
-            return res.send('Invalid password');
+        const isPasswordHashed = user.password.startsWith('$2b$');
+        
+        if(isPasswordHashed){
+            bcrypt.compare(password, user.password, (err, isPasswordValid) => {
+                if(err){
+                    console.error(err);
+                    return res.send('Server error');
+                }
+    
+                if(!isPasswordValid){
+                    return res.send('Invalid password');
+                }
+    
+                const token = jwt.sign({id:user.user_ID, name: user.name}, process.env.JWT_SECRET, {
+                    expiresIn:'1h'
+                });
+        
+                res.json({token});
+            });
+        }else{
+            if(password !== user.password){
+                return res.send('Invalid password');
+            }
+
+            const token = jwt.sign({id:user.user_ID, name: user.name}, process.env.JWT_SECRET, {
+                expiresIn:'1h'
+            });
+
+            res.json({token});
         }
-
-        const token = jwt.sign({id:user.user_ID, name: user.name}, process.env.JWT_SECRET, {
-            expiresIn:'1h'
-        });
-
-        res.json({token});
     });
 });
 
