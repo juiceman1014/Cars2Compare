@@ -45,9 +45,9 @@ const CarsSavedPage = () => {
     <>
       <div>
         <h1 className="text-center mt-[20px] text-xl">Saved Cars</h1>
-        <carcontainer className="flex flex-col">
+        <div className="flex flex-col">
           {cars.map((car) => (
-            <car
+            <div
               key={car.car_ID}
               className="border-black m-[10px] border-[3px] flex flex-col lg:flex-row p-[10px] justify-between items-start lg:items-center flex-wrap"
             >
@@ -75,9 +75,9 @@ const CarsSavedPage = () => {
               <p>Engine: {car.engine}</p>
               <p>Transmission: {car.transmission}</p>
               <p>Weight(lbs.): {car.weight}</p>
-            </car>
+            </div>
           ))}
-        </carcontainer>
+        </div>
       </div>
     </>
   );
