@@ -12,10 +12,14 @@ const RegisterPage = () => {
         name: username,
         password: password,
       });
-      alert(response.data + "! Press OK to redirect to login page");
-      window.location.href = "/SignIn"
+      if(response.data === 'User registered'){
+        alert(response.data + "! Press OK to redirect to login page");
+        window.location.href = "/SignIn"
+      }else{
+        alert(response.data);
+      }
     } catch (error) {
-      alert("Error registering user");
+      alert("Error registering");
       console.error(error);
     }
   };
