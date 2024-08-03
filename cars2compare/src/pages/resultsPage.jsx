@@ -92,16 +92,16 @@ const ResultsPage = () => {
               Add To Saved
             </button>
           </div>
-          <div className="flex flex-col mt-[10px]">
+          <div className="flex justify-center p-[10px] mt-[10px]">
             <button
-              className="text-xl text-center"
+              className="text-xl text-center border-black border-[2px] w-[300px]"
               onClick={() => {
                 navigate(
                   `/ReviewForCar?carID=${carInfo.car_ID}&make=${make}&model=${model}`
                 );
               }}
             >
-              Reviews
+              Click here to view REVIEWS
             </button>
           </div>
         </div>
@@ -126,16 +126,16 @@ const ResultsPage = () => {
               Add To Saved
             </button>
           </div>
-          <div className="flex flex-col mt-[10px]">
+          <div className="flex justify-center p-[10px] mt-[10px]">
             <button
-              className="text-xl text-center"
+              className="text-xl text-center border-black border-[2px] w-[300px]"
               onClick={() => {
                 navigate(
                   `/ReviewForCar?carID=${carInfoTwo.car_ID}&make=${makeTwo}&model=${modelTwo}`
                 );
               }}
             >
-              Reviews
+              Click here to view REVIEWS
             </button>
           </div>
         </div>
