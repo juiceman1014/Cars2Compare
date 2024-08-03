@@ -83,9 +83,7 @@ CREATE TABLE Comment_Dislike (
 
 CREATE TABLE Photo (
 	photo_ID INT PRIMARY KEY,
-	car_ID INT,
-	image_path VARCHAR(255),
-	FOREIGN KEY (car_ID) REFERENCES Car(car_ID) ON UPDATE CASCADE ON DELETE CASCADE
+	image_path VARCHAR(255)
 );
 
 CREATE TABLE Car_Has_Photo (
