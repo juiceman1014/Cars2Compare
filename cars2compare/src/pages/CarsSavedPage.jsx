@@ -67,7 +67,7 @@ const CarsSavedPage = () => {
               <p>
                 Name: {car.year} {car.make} {car.model}
               </p>
-              <p>Edmund Rating: {car.rating}</p>
+              <p>Edmunds Rating: {car.rating}</p>
               <p>Price: {car.price}</p>
               <p>Body type: {car.body_style}</p>
               <p>MPG: {car.MPG}</p>
