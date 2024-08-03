@@ -279,7 +279,7 @@ app.get('/getReviews/:carID',(req,res) =>{
 
 app.get('/getComments', (req, res) => {
     const query = `
-        SELECT Comments.textualContent, Comments.review_ID, User.name 
+        SELECT Comments.textualContent, Comments.review_ID, Comments.comment_ID, User.name 
         FROM Comments, User
         WHERE Comments.user_ID = User.user_ID
     `;
@@ -325,6 +325,120 @@ app.delete('/savedCars/:carID', authenticateToken, (req,res) => {
         res.send('Car succesfully deleted!');
     });
 });
+
+app.get('/getReviewLikes/:carID', (req,res)=>{
+    const carID = req.params.carID;
+    const query = `
+        SELECT Review.review_ID, Review.user_ID, COUNT(Review_Like.review_ID) AS like_count
+        FROM Review, Review_Like
+        WHERE Review.car_ID = ? AND Review.review_ID = Review_Like.review_ID
+        GROUP BY Review.review_ID, Review.user_ID;
+        `
+
+    db.query(query,[carID], (err,results) =>{
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.json(results)
+    })
+});
+
+
+app.get('/getReviewDislikes/:carID', (req,res)=>{
+    const carID = req.params.carID;
+    const query = `
+        SELECT Review.review_ID, Review.user_ID, COUNT(Review_Dislike.review_ID) AS like_count
+        FROM Review, Review_Dislike
+        WHERE Review.car_ID = ? AND Review.review_ID = Review_Dislike.review_ID
+        GROUP BY Review.review_ID, Review.user_ID;
+        `
+
+    db.query(query,[carID], (err,results) =>{
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.json(results)
+    })
+});
+
+app.get('/getCommentLikes/:carID', (req,res)=>{
+    const carID = req.params.carID;
+    const query = `
+        SELECT Comments.comment_ID, Comments.user_ID, COUNT(Comment_Like.comment_ID) AS like_count
+        FROM Review, Comments, Comment_Like
+        WHERE Review.car_ID = ? AND Review.review_ID = Comments.review_ID AND Comments.comment_ID = Comment_Like.comment_ID
+        GROUP BY Comments.comment_ID, Comments.user_ID;
+    `
+
+    db.query(query,[carID], (err,results) =>{
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        res.json(results);
+    })
+});
+
+app.get('/getCommentDislikes/:carID', (req,res)=>{
+    const carID = req.params.carID;
+    const query = `
+        SELECT Comments.comment_ID, Comments.user_ID, COUNT(Comment_Dislike.comment_ID) AS dislike_count
+        FROM Review, Comments, Comment_Dislike
+        WHERE Review.car_ID = ? AND Review.review_ID = Comments.review_ID AND Comments.comment_ID = Comment_Dislike.comment_ID
+        GROUP BY Comments.comment_ID, Comments.user_ID;
+    `
+
+    db.query(query,[carID], (err,results) =>{
+        if(err){
+            console.error(err);
+            return res.send('Server error');
+        }
+        console.log(results);
+        res.json(results);
+    })
+});
+
+app.post('/submitReviewLike', authenticateToken, (req, res) => {
+    const { reviewID } = req.body;
+    const userID = req.user.id;
+
+    if (!reviewID || !userID) {
+        return res.status(400).send('Missing reviewID or userID');
+    }
+
+    const insertReviewLike = 'INSERT INTO Review_Like (review_ID, user_ID) VALUES (?, ?)';
+    db.query(insertReviewLike, [reviewID, userID], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).send('Server error');
+        }
+
+        res.send('Review liked successfully');
+    });
+});
+
+app.post('/submitReviewDislike', authenticateToken, (req, res) => {
+    const { reviewID } = req.body;
+    const userID = req.user.id;
+
+    if (!reviewID || !userID) {
+        return res.status(400).send('Missing reviewID or userID');
+    }
+
+    const insertReviewDislike = 'INSERT INTO Review_Dislike (review_ID, user_ID) VALUES (?, ?)';
+    db.query(insertReviewDislike, [reviewID, userID], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).send('Server error');
+        }
+
+        res.send('Review disliked successfully');
+    });
+});
+
+
 
 app.get('/protected', authenticateToken, (req,res) => {
     res.send('This is a protected route');
