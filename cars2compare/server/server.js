@@ -206,7 +206,9 @@ app.post('/review', authenticateToken, (req, res) => {
 
 app.get('/carData', (req, res) => {
     const { make, model, year } = req.query;
-    const query = 'SELECT car_ID, price, MPG, HP, engine, transmission, weight FROM Car WHERE make = ? AND model = ? AND year = ?';
+    const query = `SELECT C.*, P.image_path
+    FROM Car C, Photo P, Car_Has_Photo CHP
+    WHERE make = ? AND model = ? AND year = ? AND C.car_ID = CHP.car_ID AND CHP.photo_ID = P.photo_ID`;
     
     db.query(query, [make, model, year], (err, results) => {
       if (err) {
@@ -216,7 +218,8 @@ app.get('/carData', (req, res) => {
       res.json(results[0]);
     });
   });
-  
+
+//used by CarsSavedPage.jsx
 app.get('/savedCars', authenticateToken, (req,res) => {
     const userID = req.user.id;
     const query = `SELECT C.*, P.image_path 
@@ -228,11 +231,11 @@ app.get('/savedCars', authenticateToken, (req,res) => {
             console.error(err);
             return res.send('Server error');
         }
-        console.log(results);
         res.json(results);
     });
 });
 
+//used by resultsPage.jsx
 app.post('/savedCar', authenticateToken, (req, res) => {
     const { carID, userID } = req.body;
 
