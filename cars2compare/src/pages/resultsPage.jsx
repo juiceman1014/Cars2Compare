@@ -31,6 +31,7 @@ const ResultsPage = () => {
             year: year,
           },
         });
+        console.log("Car 1 data:", response.data);
         const responseTwo = await axios.get("http://localhost:3002/carData", {
           params: {
             make: makeTwo,
@@ -38,6 +39,7 @@ const ResultsPage = () => {
             year: yearTwo,
           },
         });
+        console.log("Car 2 data:", responseTwo.data);
         setCarInfo(response.data);
         setCarInfoTwo(responseTwo.data);
       } catch (error) {
@@ -76,7 +78,11 @@ const ResultsPage = () => {
             <h1 className="text-xl p-[20px]">
               {year} {make} {model}
             </h1>
-            <img className="w-auto h-4/6" src={carInfo.image_path} alt="car image"></img>
+            <img
+              className="w-auto h-4/6"
+              src={carInfo.image_path}
+              alt="car image"
+            ></img>
           </div>
           <p className="p-[10px]">Edmunds Rating: {carInfo.rating}</p>
           <p className="p-[10px]">Price: {carInfo.price}</p>
@@ -112,7 +118,11 @@ const ResultsPage = () => {
             <h1 className="text-xl p-[20px]">
               {yearTwo} {makeTwo} {modelTwo}
             </h1>
-            <img className="w-auto h-4/6" src={carInfoTwo.image_path} alt="car image"></img>
+            <img
+              className="w-auto h-4/6"
+              src={carInfoTwo.image_path}
+              alt="car image"
+            ></img>
           </div>
           <p className="p-[10px]">Edmunds Rating: {carInfoTwo.rating}</p>
           <p className="p-[10px]">Price: {carInfoTwo.price}</p>
