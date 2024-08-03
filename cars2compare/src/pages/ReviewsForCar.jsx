@@ -180,6 +180,50 @@ const ReviewsForCar = () => {
     }
   };
 
+  const handleCommentLikes = async (commentID) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/submitCommentLike",
+        { commentID },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      alert(response.data);
+      const updatedLikes = await axios.get(
+        `http://localhost:3002/getCommentLikes/${carID}`
+      );
+      setCommentLikes(updatedLikes.data);
+    } catch (error) {
+      console.error("Error liking comment", error);
+      alert("Error liking comment");
+    }
+  };
+
+  const handleCommentDislikes = async (commentID) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/submitCommentDislike",
+        { commentID },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      alert(response.data);
+      const updatedLikes = await axios.get(
+        `http://localhost:3002/getCommentDislikes/${carID}`
+      );
+      setCommentDislikes(updatedLikes.data);
+    } catch (error) {
+      console.error("Error liking comment", error);
+      alert("Error liking comment");
+    }
+  };
+
   return (
     <div className="flex flex-col mx-8 lg:mx-24">
       <h1 className="text-xl">
@@ -263,6 +307,7 @@ const ReviewsForCar = () => {
                         className="cursor-pointer object-contain"
                         src={thumbs_up}
                         width={12}
+                        onClick={() => handleCommentLikes(comment.comment_ID)}
                       ></img>
                       {commentLikes.find(
                         (like) => like.comment_ID === comment.comment_ID
@@ -271,6 +316,9 @@ const ReviewsForCar = () => {
                         className="rotate-180 cursor-pointer object-contain"
                         src={thumbs_down}
                         width={12}
+                        onClick={() =>
+                          handleCommentDislikes(comment.comment_ID)
+                        }
                       ></img>
                       {commentDislikes.find(
                         (dislike) => dislike.comment_ID === comment.comment_ID

@@ -395,7 +395,6 @@ app.get('/getCommentDislikes/:carID', (req,res)=>{
             console.error(err);
             return res.send('Server error');
         }
-        console.log(results);
         res.json(results);
     })
 });
@@ -438,7 +437,43 @@ app.post('/submitReviewDislike', authenticateToken, (req, res) => {
     });
 });
 
+app.post('/submitCommentLike', authenticateToken, (req, res) => {
+    const { commentID } = req.body;
+    const userID = req.user.id;
 
+    if (!commentID || !userID) {
+        return res.status(400).send('Missing commentID or userID');
+    }
+
+    const insertCommentLike = 'INSERT INTO Comment_Like (comment_ID, user_ID) VALUES (?, ?)';
+    db.query(insertCommentLike, [commentID, userID], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).send('Server error');
+        }
+
+        res.send('Comment liked successfully');
+    });
+});
+
+app.post('/submitCommentDislike', authenticateToken, (req, res) => {
+    const { commentID } = req.body;
+    const userID = req.user.id;
+
+    if (!commentID || !userID) {
+        return res.status(400).send('Missing commentID or userID');
+    }
+
+    const insertCommentLike = 'INSERT INTO Comment_Dislike (comment_ID, user_ID) VALUES (?, ?)';
+    db.query(insertCommentLike, [commentID, userID], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).send('Server error');
+        }
+
+        res.send('Comment disliked successfully');
+    });
+});
 
 app.get('/protected', authenticateToken, (req,res) => {
     res.send('This is a protected route');
