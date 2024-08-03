@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
@@ -6,6 +6,7 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -13,11 +14,23 @@ export const UserProvider = ({ children }) => {
       try {
         const decodedUser = jwtDecode(token);
         setUser({ id: decodedUser.id, username: decodedUser.name, token });
+
+        const tokenExpirationTime = decodedUser.exp * 1000 - Date.now();
+        timeoutRef.current = setTimeout(() => {
+          alert("Your session has expired. Press OK to logout");
+          logout();
+        }, tokenExpirationTime);
       } catch (error) {
         console.error("Invalid token", error);
         localStorage.removeItem("token");
       }
     }
+
+    return() => {
+      if(timeoutRef.current){
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
 
   const login = async (username, password) => {
