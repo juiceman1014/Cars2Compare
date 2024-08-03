@@ -55,6 +55,7 @@ CREATE TABLE Review_Dislike (
 	FOREIGN KEY (user_ID) REFERENCES User(user_ID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 	
+
 CREATE TABLE Comments (
 	comment_ID INT AUTO_INCREMENT PRIMARY KEY,
 	review_ID INT,
@@ -92,62 +93,6 @@ CREATE TABLE Car_Has_Photo (
 	FOREIGN KEY (car_ID) REFERENCES Car(car_ID) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (photo_ID) REFERENCES Photo(photo_ID) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
-INSERT INTO User(user_ID, name, password) VALUES
-	(1, 'Anh Huynh', '3I1cODzH3UFJEqqGL7KTXQKS'),
-	(2, 'Anna Anderson', 'LhCVz2k73OUx3J39iI3fW6m0'),
-	(3, 'Anthony Stewart', 'hmh9peZIAMrjy'),
-	(4, 'Bao Ngo', 'E4uIF9OSYqkQNZgWvmEp'),
-	(5, 'Barbara Clark', 'd3K0gHZgCsN1D3OJc'),
-	(6, 'Betty Lewis', 'OB2rgLzbj3eFOodqLh77'),
-	(7, 'Charles Garcia', 'mwQ7vXCrZcBEiXi5u'),
-	(8, 'Christopher Young', '66IszVbLpnelGM72E'),
-	(9, 'Daniel Lee', '6o7es7I6KYYGWjrW9oOYSC'),
-	(10, 'David Brown', 'MHiiHB08MthF7QDYm6K'),
-	(11, 'Emily Johnson', 'BTX4peY4YsGo4k'),
-	(12, 'Hoang Le', '9VptLAAGSpOgWsJoicO'),
-	(13, 'James Taylor', 'NQysLGJ9pqmGF3Iph'),
-	(14, 'Jane Doe', '24znkThSHeCJI'),
-	(15, 'Jason Parker', 'Hyk9oKEPlUfTzev6YGgg'),
-	(16, 'Jessica Collins', 'krJFy7G6braI704IN9y'),
-	(17, 'Jia Yang', 'R558Qsv0J8k5xUvZM'),
-	(18, 'John Smith', 'gRGw7Bck1aGX8YFCn8c30A'),
-	(19, 'Joseph Robinson', 'slMN67oN1Iq0ijxx769S'),
-	(20, 'Justin Morris', 'L34lQH45Jvss4'),
-	(21, 'Karen Thompson', '7WrXoal6A01a4XZK8QAB'),
-	(22, 'Laura Moore', 'AV70M8DjNXWxJcU'),
-	(23, 'Linda Harris', 'cjwoPgyGfM1CUIMGk8n2'),
-	(24, 'Linh Nguyen', 'VOyFmMDMghpXSsIUM11CZ'),
-	(25, 'Lisa Walker', 'NUsbRQHecpqFHNbQBogtslx'),
-	(26, 'Mai Truong', 'HERhnvKSoyjOKB6vJVGdS3LF'),
-	(27, 'Matthew Hall', 'h3aBnZDRBi2B9QJ'),
-	(28, 'Megan Rogers', 'QiE33giH771IC'),
-	(29, 'Melissa Evans', '1DBEKDE8nyz4AKOgQZy'),
-	(30, 'Michael White', 'Qws5w9qdmMAOVC8Se'),
-	(31, 'Mike Jones', 'Vkk1yPJZ6nX12APKQ4TPly'),
-	(32, 'Minato Ito', '6QpZovJ4m0ymL'),
-	(33, 'Ming Wang', 'MxxDJb9P2f8NeK6x'),
-	(34, 'Nancy Martinez', 'B9kREPLzNlVtUyKAL4G1KC'),
-	(35, 'Nguyen Tran', 'yKF4sPxR8lAqYJEM'),
-	(36, 'Patricia Allen', 'OW4jf7R5XYaNRkVAOFKGrpoN'),
-	(37, 'Paul Edwards', 'IgRf3eczS7NzvTlN06d7'),
-	(38, 'Rebecca Sanchez', '9JFe9fTP0eOgdfuqQi1nJJMt'),
-	(39, 'Richard Thomas', 'c39t4iyGf6sOb8BKjF6Zj'),
-	(40, 'Robert Wilson', 'TcgVXtlPzabk31g8xV'),
-	(41, 'Sarah Miller', '1YDh0lTyIPiJJAYIwYL'),
-	(42, 'Son Do', 'ronrjm62mF06GBpp'),
-	(43, 'Susan Jackson', 'fzWYkV77zkdqR3VXjRt'),
-	(44, 'Thao Pham', 'YQ5IOQlKmdvUGuWb'),
-	(45, 'Thomas Rodriguez', '1kEQNZ1dTy9yunEsEywzA4'),
-	(46, 'Thuy Lam', '12znJSOcJkmC'),
-	(47, 'Tuan Vo', 'Eqb3vCNlk5WL'),
-	(48, 'Wei Chen', 'IpHkGpSSY98QyYQXIY38gIQX'),
-	(49, 'William Martin', 'RzZBiZvVidy6k0mLe'),
-	(50, 'Xiao Li', '9scap6F2x7JEnW');
-    
-SELECT * 
-FROM User
-ORDER BY CAST(SUBSTRING(user_ID, 1) AS UNSIGNED);
 
 INSERT INTO Car(car_ID, make, model, year, body_style, price, MPG, HP, engine, transmission, weight, rating) VALUES
 	(1, 'Acura', 'MDX', 2024, 'SUV', '50000', '20 / 27', '290 hp', '3.5L V6', '9-speed automatic', 4300, 7.8),
@@ -237,9 +182,59 @@ INSERT INTO Car(car_ID, make, model, year, body_style, price, MPG, HP, engine, t
 	(85, 'Volkswagen', 'Jetta', 2024, 'Sedan', '28000', '30 / 40', '158 hp', '1.5L Turbo I4', '8-speed automatic', 3100, 7.8),
 	(86, 'Volkswagen', 'ID.4', 2024, 'SUV (Electric)', '41600', '100 / 250', '201 hp', 'Electric', 'Single-speed automatic', 4600, 7.7);
 
-SELECT * 
-FROM Car
-ORDER BY CAST(SUBSTRING(car_ID, 1) AS UNSIGNED);
+
+INSERT INTO User(user_ID, name, password) VALUES
+	(1, 'Anh Huynh', '3I1cODzH3UFJEqqGL7KTXQKS'),
+	(2, 'Anna Anderson', 'LhCVz2k73OUx3J39iI3fW6m0'),
+	(3, 'Anthony Stewart', 'hmh9peZIAMrjy'),
+	(4, 'Bao Ngo', 'E4uIF9OSYqkQNZgWvmEp'),
+	(5, 'Barbara Clark', 'd3K0gHZgCsN1D3OJc'),
+	(6, 'Betty Lewis', 'OB2rgLzbj3eFOodqLh77'),
+	(7, 'Charles Garcia', 'mwQ7vXCrZcBEiXi5u'),
+	(8, 'Christopher Young', '66IszVbLpnelGM72E'),
+	(9, 'Daniel Lee', '6o7es7I6KYYGWjrW9oOYSC'),
+	(10, 'David Brown', 'MHiiHB08MthF7QDYm6K'),
+	(11, 'Emily Johnson', 'BTX4peY4YsGo4k'),
+	(12, 'Hoang Le', '9VptLAAGSpOgWsJoicO'),
+	(13, 'James Taylor', 'NQysLGJ9pqmGF3Iph'),
+	(14, 'Jane Doe', '24znkThSHeCJI'),
+	(15, 'Jason Parker', 'Hyk9oKEPlUfTzev6YGgg'),
+	(16, 'Jessica Collins', 'krJFy7G6braI704IN9y'),
+	(17, 'Jia Yang', 'R558Qsv0J8k5xUvZM'),
+	(18, 'John Smith', 'gRGw7Bck1aGX8YFCn8c30A'),
+	(19, 'Joseph Robinson', 'slMN67oN1Iq0ijxx769S'),
+	(20, 'Justin Morris', 'L34lQH45Jvss4'),
+	(21, 'Karen Thompson', '7WrXoal6A01a4XZK8QAB'),
+	(22, 'Laura Moore', 'AV70M8DjNXWxJcU'),
+	(23, 'Linda Harris', 'cjwoPgyGfM1CUIMGk8n2'),
+	(24, 'Linh Nguyen', 'VOyFmMDMghpXSsIUM11CZ'),
+	(25, 'Lisa Walker', 'NUsbRQHecpqFHNbQBogtslx'),
+	(26, 'Mai Truong', 'HERhnvKSoyjOKB6vJVGdS3LF'),
+	(27, 'Matthew Hall', 'h3aBnZDRBi2B9QJ'),
+	(28, 'Megan Rogers', 'QiE33giH771IC'),
+	(29, 'Melissa Evans', '1DBEKDE8nyz4AKOgQZy'),
+	(30, 'Michael White', 'Qws5w9qdmMAOVC8Se'),
+	(31, 'Mike Jones', 'Vkk1yPJZ6nX12APKQ4TPly'),
+	(32, 'Minato Ito', '6QpZovJ4m0ymL'),
+	(33, 'Ming Wang', 'MxxDJb9P2f8NeK6x'),
+	(34, 'Nancy Martinez', 'B9kREPLzNlVtUyKAL4G1KC'),
+	(35, 'Nguyen Tran', 'yKF4sPxR8lAqYJEM'),
+	(36, 'Patricia Allen', 'OW4jf7R5XYaNRkVAOFKGrpoN'),
+	(37, 'Paul Edwards', 'IgRf3eczS7NzvTlN06d7'),
+	(38, 'Rebecca Sanchez', '9JFe9fTP0eOgdfuqQi1nJJMt'),
+	(39, 'Richard Thomas', 'c39t4iyGf6sOb8BKjF6Zj'),
+	(40, 'Robert Wilson', 'TcgVXtlPzabk31g8xV'),
+	(41, 'Sarah Miller', '1YDh0lTyIPiJJAYIwYL'),
+	(42, 'Son Do', 'ronrjm62mF06GBpp'),
+	(43, 'Susan Jackson', 'fzWYkV77zkdqR3VXjRt'),
+	(44, 'Thao Pham', 'YQ5IOQlKmdvUGuWb'),
+	(45, 'Thomas Rodriguez', '1kEQNZ1dTy9yunEsEywzA4'),
+	(46, 'Thuy Lam', '12znJSOcJkmC'),
+	(47, 'Tuan Vo', 'Eqb3vCNlk5WL'),
+	(48, 'Wei Chen', 'IpHkGpSSY98QyYQXIY38gIQX'),
+	(49, 'William Martin', 'RzZBiZvVidy6k0mLe'),
+	(50, 'Xiao Li', '9scap6F2x7JEnW');
+
 
 INSERT INTO Saved_Car (user_ID, car_ID) VALUES
 	(1, 5),
@@ -363,12 +358,7 @@ INSERT INTO Saved_Car (user_ID, car_ID) VALUES
 	(50, 86),
 	(50, 29);
 
-SELECT * 
-FROM Saved_Car
-ORDER BY CAST(SUBSTRING(user_ID, 1) AS UNSIGNED);
-
 INSERT INTO Review(review_ID, car_ID, user_ID, content) VALUES
-	(1, 78, 43, 'Reliable, fuel-efficient, and spacious with advanced safety features. Perfect for families.'),
 	(2, 28, 20, 'Sporty design, excellent fuel economy, and tech-savvy interior. A top choice for compact car lovers.'),
 	(3, 59, 35, 'Tough and capable, with impressive towing and payload capacities. Ideal for work and play.'),
 	(4, 28, 15, 'Strong performance, spacious cabin, and modern tech make it a great option.'),
@@ -431,9 +421,6 @@ INSERT INTO Review(review_ID, car_ID, user_ID, content) VALUES
 	(61, 41, 38, 'Stylish, sporty, and tech-filled. A great option.'),
 	(62, 84, 37, 'Powerful, high-tech, and thrilling. A top performance choice.');
 
-SELECT * 
-FROM Review
-ORDER BY CAST(SUBSTRING(review_ID, 1) AS UNSIGNED);
 
 INSERT INTO Review_Like(review_ID, user_ID) VALUES
 	(2, 14),
@@ -596,10 +583,6 @@ INSERT INTO Review_Like(review_ID, user_ID) VALUES
 	(58, 38),
 	(58, 40);
 
-SELECT * 
-FROM Review_Like
-ORDER BY CAST(SUBSTRING(review_ID, 1) AS UNSIGNED);
-
 INSERT INTO Review_Dislike(review_ID, user_ID) VALUES
 	(2, 50),
 	(2, 27),
@@ -671,10 +654,6 @@ INSERT INTO Review_Dislike(review_ID, user_ID) VALUES
 	(59, 2),
 	(60, 20),
 	(62, 33);
-    
-SELECT * 
-FROM Review_Dislike
-ORDER BY CAST(SUBSTRING(review_ID, 1) AS UNSIGNED);
 
 INSERT INTO Comments(comment_ID, review_ID, user_ID, textualContent) VALUES
 	(1, 31, 31, 'Great review! Your insights on the fuel efficiency are spot on.'),
@@ -721,9 +700,7 @@ INSERT INTO Comments(comment_ID, review_ID, user_ID, textualContent) VALUES
 	(42, 36, 28, 'How does the car perform in city driving versus highway driving?'),
 	(43, 21, 37, 'What’s the availability of electric or hybrid versions of this model?');
 
-SELECT * 
-FROM Comments
-ORDER BY CAST(SUBSTRING(comment_ID, 3) AS UNSIGNED);
+
 
 INSERT INTO Comment_Like(comment_ID, user_ID) VALUES
 	(1, 3),
@@ -769,91 +746,49 @@ INSERT INTO Comment_Like(comment_ID, user_ID) VALUES
 	(42, 5),
 	(43, 3);
 
-SELECT * 
-FROM Comment_Like
-ORDER BY CAST(SUBSTRING(comment_ID, 1) AS UNSIGNED);
-
 INSERT INTO Comment_Dislike(comment_ID, user_ID) VALUES
 	(1, 2),
 	(2, 3),
+	(3, 4),
+	(4, 9),
 	(6, 3),
 	(7, 4),
 	(8, 11),
 	(9, 1),
-	(10, 3),
+	(10, 5),
 	(11, 1),
+	(12, 14),
 	(13, 6),
+	(14, 5),
 	(15, 4),
 	(16, 1),
-	(18, 13),
-	(19, 8),
+	(17, 13),
+	(18, 8),
+	(19, 35),
 	(20, 4),
+	(21, 12),
+	(22, 3),
 	(23, 5),
 	(24, 3),
 	(25, 12),
+	(26, 12),
 	(27, 7),
-	(29, 2),
-	(30, 5),
-	(31, 4),
+	(28, 2),
+	(29, 5),
+	(30, 9),
+	(31, 6),
 	(32, 12),
 	(33, 8),
+	(34, 25),
 	(35, 9),
+	(36, 13),
 	(37, 20),
 	(38, 1),
 	(39, 8),
-	(41, 10),
-	(43, 11),
-	(1, 4),
-	(2, 7),
-	(6, 5),
-	(7, 12),
-	(8, 15),
-	(9, 4),
-	(10, 5),
-	(11, 4),
-	(13, 9),
-	(16, 6),
-	(18, 40),
-	(19, 14),
-	(23, 12),
-	(24, 7),
-	(25, 16),
-	(27, 11),
-	(29, 6),
-	(30, 9),
-	(31, 6),
-	(33, 12),
-	(37, 45),
-	(38, 7),
-	(39, 15),
+	(40, 10),
 	(41, 16),
-	(1, 8),
-	(6, 11),
-	(7, 21),
-	(8, 18),
-	(9, 12),
-	(11, 7),
-	(13, 13),
-	(16, 10),
-	(19, 46),
-	(23, 20),
-	(25, 48),
-	(30, 13),
-	(33, 37),
-	(39, 47),
-	(41, 50),
-	(1, 12),
-	(6, 17),
-	(7, 29),
-	(9, 18),
-	(11, 16),
-	(1, 19),
-	(9, 42),
-	(11, 31);
-
-SELECT * 
-FROM Comment_Dislike
-ORDER BY CAST(SUBSTRING(comment_ID, 1) AS UNSIGNED);
+	(42, 1),
+	(43, 11);
 
 INSERT INTO Photo(photo_ID, image_path) VALUES
 	(1, 'src/assets/images/default.jpg'),
@@ -943,10 +878,6 @@ INSERT INTO Photo(photo_ID, image_path) VALUES
 	(85, 'src/assets/images/default.jpg'),
 	(86, 'src/assets/images/default.jpg');
 
-SELECT * 
-FROM Photo
-ORDER BY CAST(SUBSTRING(photo_ID, 1) AS UNSIGNED);
-
 INSERT INTO Car_Has_Photo(photo_ID, car_ID) VALUES
 	(1, 1),
 	(2, 2),
@@ -1034,7 +965,3 @@ INSERT INTO Car_Has_Photo(photo_ID, car_ID) VALUES
 	(84, 84),
 	(85, 85),
 	(86, 86);
-    
-SELECT * 
-FROM Car_Has_Photo
-ORDER BY CAST(SUBSTRING(photo_ID, 1) AS UNSIGNED);
