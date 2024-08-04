@@ -3,7 +3,9 @@
 ## Team Members: 
 
 Arman Vossoughi (GitHub: ArmaVoss)
+
 Nikki Huynh (GitHub: nikkiihuynh) 
+
 Justin Tran (GitHub: juiceman1014)
 
 ## Work Distribution:
