@@ -5,10 +5,10 @@ Arman Vossoughi (Github: ArmaVoss), Nikki Huynh (nikkiihuynh), Justin Tran (juic
 
 ## Work Distribution:
 
-Arman Vossoughi:
+Arman Vossoughi: Frontend developer, backend developer, made adjustments to database
 
-Nikki Huynh:
+Nikki Huynh: Head of database design
 
-Justin Tran:
+Justin Tran: Frontend developer, backend developer, made adjustments to database
 
 
