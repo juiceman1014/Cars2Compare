@@ -1,7 +1,7 @@
 # CS157A Final Project - Cars2Compare
 
 ## Team Members: 
-Arman Vossoughi, Nikki Huynh, Justin Tran
+Arman Vossoughi (Github: ArmaVoss), Nikki Huynh (nikkiihuynh), Justin Tran (juiceman1014)
 
 ## Work Distribution:
 
