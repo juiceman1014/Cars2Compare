@@ -8,11 +8,11 @@ Justin Tran (GitHub: juiceman1014)
 
 ## Work Distribution:
 
-Arman Vossoughi: Frontend developer, backend developer, made adjustments to database
+Arman Vossoughi: Frontend developer, backend developer, assisted in database design
 
-Nikki Huynh: Head of database design
+Nikki Huynh: Head of database design, backend developer, 
 
-Justin Tran: Frontend developer, backend developer, made adjustments to database
+Justin Tran: Frontend developer, backend developer, assisted in database design
 
 ## How to Setup/Compile Our Project
 
