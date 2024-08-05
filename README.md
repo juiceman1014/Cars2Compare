@@ -18,4 +18,7 @@ Justin Tran: Frontend developer, backend developer, assisted in database design
 
 ## How to Setup/Compile Our Project
 
+[![Watch the video](https://img.youtube.com/vi/UL0S-B4TAd0/maxresdefault.jpg)](https://youtu.be/UL0S-B4TAd0)
+
+[Watch the video on YouTube](https://youtu.be/UL0S-B4TAd0)
 
