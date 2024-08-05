@@ -3,10 +3,12 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext.jsx";
 
+//page that shows all the cars a user has saved
 const CarsSavedPage = () => {
   const { user } = useContext(UserContext);
   const [cars, setCars] = useState([]);
 
+  //fetches all cars on page useState update/page refresh
   useEffect(() => {
     const fetchSavedCars = async () => {
       if (user && user.token) {
@@ -26,6 +28,7 @@ const CarsSavedPage = () => {
     fetchSavedCars();
   }, [user]);
 
+  //function to delete a saved car from a users catelog
   const handleDelete = async (carID) => {
     if (user && user.token) {
       try {

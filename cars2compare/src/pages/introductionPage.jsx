@@ -1,6 +1,7 @@
 import videoFile from "../assets/demonstration.webm";
 import { Link } from "react-router-dom";
 
+//Landing page where users are prompted with a tutorial video and a button to start comparing
 const IntroductionPage = () => {
   return (
     <>

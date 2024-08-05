@@ -17,6 +17,7 @@ const SearchPage = () => {
   const [makeTwo, setMakeTwo] = useState("");
   const [modelTwo, setModelTwo] = useState("");
 
+  //fetches years and makes
   useEffect(() => {
     const fetchYears = async () => {
       try {
@@ -40,6 +41,7 @@ const SearchPage = () => {
     fetchMakes();
   }, []);
 
+  //fethes models based on year and makes
   useEffect(() => {
     const fetchModels = async () => {
       if (!make || !year) {
@@ -59,6 +61,7 @@ const SearchPage = () => {
     fetchModels();
   }, [make, year]);
 
+  //fetches years and makes
   useEffect(() => {
     const fetchYearsTwo = async () => {
       try {
@@ -82,6 +85,7 @@ const SearchPage = () => {
     fetchMakesTwo();
   }, []);
 
+  //fetches model based on years and makes
   useEffect(() => {
     const fetchModelsTwo = async () => {
       if (!makeTwo || !yearTwo) {

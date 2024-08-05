@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  //function to register a user
   const handleRegister = async () => {
     try {
       const response = await axios.post("http://localhost:3002/register", {
         name: username,
         password: password,
       });
-      if(response.data === 'User registered'){
+      if (response.data === "User registered") {
         alert(response.data + "! Press OK to redirect to login page");
-        window.location.href = "/SignIn"
-      }else{
+        window.location.href = "/SignIn";
+      } else {
         alert(response.data);
       }
     } catch (error) {

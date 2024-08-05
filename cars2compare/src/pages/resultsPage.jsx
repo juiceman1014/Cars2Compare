@@ -5,7 +5,9 @@ import carImg from "../assets/carImg1.png";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+//page that displays results from search page
 const ResultsPage = () => {
+  //takes in paramters from the queryParamters passed through the http
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,9 +20,11 @@ const ResultsPage = () => {
   const makeTwo = paramaters.get("makeTwo");
   const modelTwo = paramaters.get("modelTwo");
 
+  //state variables to help display info fetched from database
   const [carInfo, setCarInfo] = useState([]);
   const [carInfoTwo, setCarInfoTwo] = useState([]);
 
+  //gets car data from database based on the query parameters passed in from search page
   useEffect(() => {
     const carData = async () => {
       try {
@@ -49,6 +53,7 @@ const ResultsPage = () => {
     carData();
   }, []);
 
+  //if a user saves a car, itll get added to their saved car list
   const handleSavedCar = async (carID) => {
     try {
       const response = await axios.post(

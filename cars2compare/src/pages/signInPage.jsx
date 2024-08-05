@@ -7,11 +7,12 @@ const SignInPage = () => {
   const [password, setPassword] = useState("");
   const { login } = useContext(UserContext);
 
+  //allows user to log in
   const handleLogin = async () => {
     const result = await login(username, password);
     if (result.success) {
       alert("Login successful! Press OK to redirect to home page");
-      window.location.href = "/"
+      window.location.href = "/";
     } else {
       alert(result.message);
     }

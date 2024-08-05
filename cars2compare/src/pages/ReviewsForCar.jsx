@@ -5,7 +5,9 @@ import { UserContext } from "../context/UserContext.jsx";
 import thumbs_up from "../assets/images/thumbs_up.png";
 import thumbs_down from "../assets/images/thumbs_up.png";
 
+//page that displays a cars reviews and comments
 const ReviewsForCar = () => {
+  //variables that store query paramters passed in from the results page
   const { user } = useContext(UserContext);
   const location = useLocation();
   const parameters = new URLSearchParams(location.search);
@@ -13,6 +15,7 @@ const ReviewsForCar = () => {
   const make = parameters.get("make");
   const model = parameters.get("model");
 
+  //use states that help display relevant information
   const [comments, setComments] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [reply, setReply] = useState("");
@@ -22,6 +25,7 @@ const ReviewsForCar = () => {
   const [commentLikes, setCommentLikes] = useState([]);
   const [commentDislikes, setCommentDislikes] = useState([]);
 
+  //function that is invoked when a reply is left on a review
   const submitComment = async (reviewID) => {
     try {
       const response = await axios.post(
@@ -46,6 +50,7 @@ const ReviewsForCar = () => {
     }
   };
 
+  //if the text box is empty we wont submit the comment, otherwise submit it
   const handleCommentSubmit = (reviewID) => {
     if (content.length === 0) {
       alert("Cannot be blank");
@@ -54,6 +59,7 @@ const ReviewsForCar = () => {
     }
   };
 
+  //gets all reviews for a car
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -68,6 +74,7 @@ const ReviewsForCar = () => {
     fetchReviews();
   }, [carID]);
 
+  //fetches all comments for that car
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -80,6 +87,7 @@ const ReviewsForCar = () => {
     fetchComments();
   }, [comments]);
 
+  //fetches review likes
   useEffect(() => {
     const fetchLikes = async () => {
       try {
@@ -94,6 +102,7 @@ const ReviewsForCar = () => {
     fetchLikes();
   }, []);
 
+  //fetches review dislikes
   useEffect(() => {
     const fetchDislikes = async () => {
       try {
@@ -108,6 +117,7 @@ const ReviewsForCar = () => {
     fetchDislikes();
   }, []);
 
+  //fetches comment likes
   useEffect(() => {
     const fetchCommentLikes = async () => {
       try {
@@ -122,6 +132,7 @@ const ReviewsForCar = () => {
     fetchCommentLikes();
   }, []);
 
+  //fetches comment dislikes
   useEffect(() => {
     const fetchCommentDislikes = async () => {
       try {
@@ -136,6 +147,7 @@ const ReviewsForCar = () => {
     fetchCommentDislikes();
   }, []);
 
+  //function for when a user likes a review
   const handleReviewLike = async (reviewID) => {
     try {
       const response = await axios.post(
@@ -158,6 +170,7 @@ const ReviewsForCar = () => {
     }
   };
 
+  //function for when a user dislikes a review
   const handleReviewDisLike = async (reviewID) => {
     try {
       const response = await axios.post(
@@ -180,6 +193,7 @@ const ReviewsForCar = () => {
     }
   };
 
+  //function to handle like a comment
   const handleCommentLikes = async (commentID) => {
     try {
       const response = await axios.post(
@@ -202,6 +216,7 @@ const ReviewsForCar = () => {
     }
   };
 
+  //funcition to handle disliking a comment
   const handleCommentDislikes = async (commentID) => {
     try {
       const response = await axios.post(
