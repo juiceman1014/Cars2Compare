@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext.jsx";
 
+//navbar component allows navigation to different pages
+
 const Navbar = () => {
   const { user, logout } = useContext(UserContext);
 
@@ -13,24 +15,21 @@ const Navbar = () => {
         </Link>
         <ul className="flex gap-5 items-baseline">
           <CustomLink to="/Search">Search</CustomLink>
-        {user ? ( 
-          <>
-          <CustomLink to="/CarsSaved">Saved Cars</CustomLink>
-          <CustomLink to="/Review">Review A Car</CustomLink>
-          <div>Hello, {user.username}</div>
-          <button 
-          onClick = {logout}
-          >
-            Logout
-          </button>
-          </>
-        ) : (  <CustomLink
-            to="/SignIn"
-            className="border-2 border-black p-2 rounded-xl hover:bg-black hover:text-white"
-          >
-            Sign In
-          </CustomLink>
-        )}
+          {user ? (
+            <>
+              <CustomLink to="/CarsSaved">Saved Cars</CustomLink>
+              <CustomLink to="/Review">Review A Car</CustomLink>
+              <div>Hello, {user.username}</div>
+              <button onClick={logout}>Logout</button>
+            </>
+          ) : (
+            <CustomLink
+              to="/SignIn"
+              className="border-2 border-black p-2 rounded-xl hover:bg-black hover:text-white"
+            >
+              Sign In
+            </CustomLink>
+          )}
         </ul>
       </nav>
     </>
