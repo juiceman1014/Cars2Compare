@@ -1,9 +1,83 @@
-import React, { useState } from "react";
-import Dropdown from "../components/dropDown";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { UserContext } from "../context/UserContext.jsx";
 
-const ReviewPage = ({ options, model, year }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const ReviewPage = () => {
+  const { user } = useContext(UserContext);
+  const [years, setYears] = useState([]);
+  const [makes, setMakes] = useState([]);
+  const [models, setModels] = useState([]);
+  const [year, setYear] = useState("");
+  const [make, setMake] = useState("");
+  const [model, setModel] = useState("");
+  const [content, setContent] = useState("");
+  
+  useEffect(() => {
+    const fetchYears = async () => {
+      try {
+        const response = await axios.get("http://localhost:3002/years");
+        setYears(response.data);
+      }catch (error){
+        console.error("Error fetching years", error);
+      }
+    };
+
+    const fetchMakes = async () => {
+      try {
+        const response = await axios.get("http://localhost:3002/makes");
+        setMakes(response.data);
+      }catch (error){
+        console.error("Error fetching makes", error);
+      }
+    };
+
+    fetchYears();
+    fetchMakes();
+  }, []);
+
+  useEffect(() => {
+    const fetchModels = async() => {
+      if(!make || !year){
+        return;
+      }
+
+      try{
+        const response = await axios.get(`http://localhost:3002/models/${make}/${year}`);
+        setModels(response.data);
+      }catch (error) {
+        console.error("Error fetching models", error);
+      }
+    };
+
+    fetchModels();
+  }, [make, year]);
+
+  const handleReview = async() => {
+    if(!year || !make || !model || !content){
+      alert("Please fill out all fields");
+      return;
+    }
+
+    try{
+      const response = await axios.post("http://localhost:3002/review", {
+        year,
+        make,
+        model,
+        content,
+        userID: user.id
+      }, {
+        headers:{
+          Authorization: `Bearer ${user.token}`
+        }
+      });
+
+      const message = response.data;
+      alert(message);
+      }catch(error){
+        console.error("Error submitting review", error);
+        alert("Error submitting review");
+      }
+  };
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-center gap-3 mt-20">
@@ -11,22 +85,37 @@ const ReviewPage = ({ options, model, year }) => {
           <h1 className="mt-5">Review</h1>
           <div className="flex flex-col gap-10 mt-5 w-[300px] h-[400px]">
             <div className="flex flex-row items-center gap-10">
+              <h1 className="mr-3">Year</h1>
+              <select value = {year} onChange={(e) => setYear(e.target.value)}>
+                <option value = "">Pick One</option>
+                {years.map((year) => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+            </div>
+            <div className="flex flex-row items-center gap-10">
               <h1 className="mr-1">Make</h1>
-              <Dropdown options={options}></Dropdown>
+              <select value = {make} onChange={(e) => setMake(e.target.value)}>
+                <option value = "">Pick One</option>
+                {makes.map((make) => (
+                  <option key={make} value={make}>{make}</option>
+                ))}
+              </select>
             </div>
             <div className="flex flex-row items-center gap-10">
               <h1 className="ml-[-2px]"> Model</h1>
-              <Dropdown options={model}></Dropdown>
-            </div>
-            <div className="flex flex-row items-center gap-10">
-              <h1 className="mr-3">Year</h1>
-              <Dropdown options={year}></Dropdown>
+              <select value = {model} onChange={(e) => setModel(e.target.value)}>
+                <option value = "">Pick One</option>
+                {models.map((model) => (
+                  <option key={model} value={model}>{model}</option>
+                ))}
+              </select>
             </div>
             <div className = "flex flex-row items-center">
                 <p className = "p-[5px]">Review:</p>
-                <textarea className = "border-[3px] border-black"></textarea>
+                <textarea className = "border-[3px] border-black" value={content} onChange={(e) => setContent(e.target.value)}></textarea>
             </div>
-            <button className = "border-black border-[2px] w-3/6">Submit Review</button>
+            <button className = "border-black border-[2px] w-3/6" onClick={handleReview}>Submit Review</button>
           </div>
         </div>
       </div>
