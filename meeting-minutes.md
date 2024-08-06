@@ -7,3 +7,5 @@
 *7/25/24: 1PM - 3PM. 2 hours.* Worked on database design.
 
 *8/1/24: 1PM - 4:30PM. 3 hours 30 minutes.* Finalized database design and worked on website code. 
+
+*8/4/24: 6PM - 7PM. 1 hour.* Recorded presentation.
