@@ -12,7 +12,7 @@ Justin Tran (GitHub: juiceman1014)
 
 Arman Vossoughi: Frontend developer, backend developer, assisted in database design
 
-Nikki Huynh: Head of database design, backend developer, 
+Nikki Huynh: Head of database design, backend developer, data collector
 
 Justin Tran: Frontend developer, backend developer, assisted in database design
 
