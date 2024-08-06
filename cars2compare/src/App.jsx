@@ -11,6 +11,7 @@ import ReviewPage from "./pages/reviewPage.jsx";
 import ReviewsForCar from "./pages/ReviewsForCar.jsx";
 
 function App() {
+  //all of our different routes
   return (
     <>
       <Navbar></Navbar>

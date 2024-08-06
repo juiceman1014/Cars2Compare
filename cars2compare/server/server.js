@@ -14,6 +14,7 @@ const port = 3002;
 app.use(cors());
 app.use(bodyParser.json());
 
+//creates connection to database
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -29,6 +30,7 @@ db.connect(err => {
     console.log('Connected as id ' + db.threadId);
 })
 
+//checks user auth token
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -45,10 +47,12 @@ const authenticateToken = (req, res, next) => {
     })
 }
 
+//server backend
 app.get('/', (req,res) => {
     res.send('Hello from the backend!');
 })
 
+//registers a user
 app.post('/register', (req,res) => {
     const{ name, password } = req.body;
 
@@ -86,6 +90,7 @@ app.post('/register', (req,res) => {
     });    
 });
 
+//logs a user in 
 app.post('/login', (req, res) => {
     const{ name, password } = req.body;
 
@@ -139,6 +144,7 @@ app.post('/login', (req, res) => {
     });
 });
 
+//gets all available car yeas
 app.get('/years', (req,res) => {
     const query = 'SELECT DISTINCT year from Car ORDER BY year DESC';
     db.query(query, (err, results) => {
@@ -150,6 +156,7 @@ app.get('/years', (req,res) => {
     });
 });
 
+//gets all available car makes
 app.get('/makes', (req,res) => {
     const query = 'SELECT DISTINCT make from Car ORDER BY make ASC';
     db.query(query, (err, results) => {
@@ -161,6 +168,7 @@ app.get('/makes', (req,res) => {
     });
 });
 
+//gets all available models based on make and year
 app.get('/models/:make/:year', (req, res) => {
     const { make, year } = req.params;
     const query = 'SELECT DISTINCT model FROM Car where make = ? AND year = ? ORDER BY model';
@@ -173,6 +181,7 @@ app.get('/models/:make/:year', (req, res) => {
     });
 });
 
+//creates a review 
 app.post('/review', authenticateToken, (req, res) => {
     const{ year, make, model, content, userID} = req.body;
 
@@ -204,6 +213,7 @@ app.post('/review', authenticateToken, (req, res) => {
     });
 });
 
+//gets data for a car based on year, make, and model
 app.get('/carData', (req, res) => {
     const { make, model, year } = req.query;
     const query = `SELECT C.*, P.image_path
@@ -219,7 +229,7 @@ app.get('/carData', (req, res) => {
     });
   });
 
-//used by CarsSavedPage.jsx
+//gets a users saved cars
 app.get('/savedCars', authenticateToken, (req,res) => {
     const userID = req.user.id;
     const query = `SELECT C.*, P.image_path 
@@ -235,7 +245,7 @@ app.get('/savedCars', authenticateToken, (req,res) => {
     });
 });
 
-//used by resultsPage.jsx
+//creates a saved car for a user
 app.post('/savedCar', authenticateToken, (req, res) => {
     const { carID, userID } = req.body;
 
@@ -255,6 +265,7 @@ app.post('/savedCar', authenticateToken, (req, res) => {
     });
 });
 
+//gets reviews for a specific carID
 app.get('/getReviews/:carID',(req,res) =>{
     const { carID } = req.params;
     if(!carID){
@@ -277,6 +288,7 @@ app.get('/getReviews/:carID',(req,res) =>{
     });
 });
 
+//gets comments for a review
 app.get('/getComments', (req, res) => {
     const query = `
         SELECT Comments.textualContent, Comments.review_ID, Comments.comment_ID, User.name 
@@ -293,7 +305,7 @@ app.get('/getComments', (req, res) => {
 });
 
 
-
+//creates a comment for a review
 app.post('/submitComment', authenticateToken, (req, res) => {
     const { reviewID, userID, content } = req.body;
     if (!reviewID || !userID || !content) {
@@ -310,7 +322,7 @@ app.post('/submitComment', authenticateToken, (req, res) => {
     });
 });
 
-
+//deletes a saved car
 app.delete('/savedCars/:carID', authenticateToken, (req,res) => {
     const userID = req.user.id;
     const carID = req.params.carID;
@@ -326,6 +338,7 @@ app.delete('/savedCars/:carID', authenticateToken, (req,res) => {
     });
 });
 
+//gets likes for a review
 app.get('/getReviewLikes/:carID', (req,res)=>{
     const carID = req.params.carID;
     const query = `
@@ -344,7 +357,7 @@ app.get('/getReviewLikes/:carID', (req,res)=>{
     })
 });
 
-
+//get dislikes for a review
 app.get('/getReviewDislikes/:carID', (req,res)=>{
     const carID = req.params.carID;
     const query = `
@@ -363,6 +376,7 @@ app.get('/getReviewDislikes/:carID', (req,res)=>{
     })
 });
 
+//gets comment likes
 app.get('/getCommentLikes/:carID', (req,res)=>{
     const carID = req.params.carID;
     const query = `
@@ -381,6 +395,7 @@ app.get('/getCommentLikes/:carID', (req,res)=>{
     })
 });
 
+//gets dislikes for a comment
 app.get('/getCommentDislikes/:carID', (req,res)=>{
     const carID = req.params.carID;
     const query = `
@@ -399,6 +414,7 @@ app.get('/getCommentDislikes/:carID', (req,res)=>{
     })
 });
 
+//likes a review
 app.post('/submitReviewLike', authenticateToken, (req, res) => {
     const { reviewID } = req.body;
     const userID = req.user.id;
@@ -418,6 +434,7 @@ app.post('/submitReviewLike', authenticateToken, (req, res) => {
     });
 });
 
+//dislikes a review
 app.post('/submitReviewDislike', authenticateToken, (req, res) => {
     const { reviewID } = req.body;
     const userID = req.user.id;
@@ -437,6 +454,7 @@ app.post('/submitReviewDislike', authenticateToken, (req, res) => {
     });
 });
 
+//likes a comment
 app.post('/submitCommentLike', authenticateToken, (req, res) => {
     const { commentID } = req.body;
     const userID = req.user.id;
@@ -456,6 +474,7 @@ app.post('/submitCommentLike', authenticateToken, (req, res) => {
     });
 });
 
+//dislikes a comment
 app.post('/submitCommentDislike', authenticateToken, (req, res) => {
     const { commentID } = req.body;
     const userID = req.user.id;
